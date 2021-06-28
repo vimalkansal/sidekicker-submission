@@ -11,3 +11,9 @@
 ## Development
 * React frontend: http://localhost
 * Express backend: http://localhost:8000
+
+## Assumptions
+
+1. Location, applicant's name must be less than or equal to 255 characters.
+2. Job title should be unique.
+3. Dates will not include time.
