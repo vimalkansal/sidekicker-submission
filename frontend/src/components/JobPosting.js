@@ -7,16 +7,13 @@ const JobPosting = () => {
     const [isLoading,setIsLoading] = useState(true);
     const history = useHistory();
     let { id } = useParams();
-    console.log("Job Posting Id: ", id);
     useEffect(()=>{
         setIsLoading(true);
-        console.log(jobPosting);
         fetchJobPostingById(id).then(result => {
-            console.log(result);
             setJobPosting(result);
             setIsLoading(false);
         })
-    },[]);
+    },[id]);
     if (isLoading) {
         return (
             <div>Loading....</div>
