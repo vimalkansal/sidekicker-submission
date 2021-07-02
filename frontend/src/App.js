@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {BrowserRouter, Route} from 'react-router-dom';
+import JobPostingList from './components/JobPostingList';
+import JobPosting from './components/JobPosting';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div className="ui container" style={{marginTop: '10px'}}>
+          <BrowserRouter>
+              <Route path="/jobpostinglist" exact component={JobPostingList}/>
+              <Route path="/jobposting/:id" exact component={JobPosting}/>
+          </BrowserRouter>
+      </div>
+  )
 }
 
 export default App;

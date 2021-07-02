@@ -4,6 +4,14 @@
 * Install [Docker](https://docs.docker.com/get-started/)
 * Build: `docker-compose build`
 * Run: `docker-compose up`
+* Seed the data : 
+    Find the container id of the backend container:
+      ![](2021-07-02-15-58-37.png)
+    Log into this container :
+    ![](2021-07-02-16-00-41.png)
+    Run the seed command
+    ![](2021-07-02-16-03-11.png)
+    Wait for the seed to finish.
 * Execute tasks: `docker-compose exec <container_name> <cmd>`. E.g.
   * `docker-compose exec coding-challenge-backend npx sequelize-cli db:create`
   * `docker-compose exec coding-challenge-backend npx sequelize-cli db:migrate`

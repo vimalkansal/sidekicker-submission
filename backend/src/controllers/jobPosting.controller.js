@@ -1,17 +1,19 @@
 const db = require("../models");
 const JobPosting = db.JobPosting;
 const JobSeeker = db.JobSeeker;
+const Location = db.Location;
 const Op = db.Sequelize.Op;
 
 exports.findAllJobPostings = (req, res) => {
     JobPosting.findAll({
         include: {
-            model: db.Location,
+            model: Location,
             as: 'location'
           }
     })
     .then(data => {
         res.send(data.map(jobPosting => ({
+        id: jobPosting.id,
         title: jobPosting.title,
         postingDate: jobPosting.postingDate,
         location: jobPosting.location.name
@@ -29,13 +31,15 @@ exports.findJobPostingById = (req,res) => {
     const id = req.params.id;
     JobPosting.findOne({
         where : {id : id},
-        include : JobSeeker
+        include : [JobSeeker, { model: Location, as: 'location' }]
     }).then(data => {
         const applicants = data.JobSeekers.map(jobSeeker => jobSeeker.name);
+        console.log(data)
         res.send(
             {
                 title: data.title,
                 description: data.description,
+               location: data.location.name,
                 postingDate: data.postingDate,
                 applicants,
             }
@@ -48,20 +52,3 @@ exports.findJobPostingById = (req,res) => {
     });
 };
 
-exports.findAllJobSeekersForAJobPosting = (req,res) => {
-    const id = req.params.id;
-    JobPosting.findOne({
-       where : {id : id},
-       include : JobSeeker
-    })
-    .then(data => {
-      res.send(
-          data.JobSeekers.map(jobSeeker => jobSeeker.name)
-      );
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Job applicants for Job Posting with id=" + id
-      });
-    });
-};
